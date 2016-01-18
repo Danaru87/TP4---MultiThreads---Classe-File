@@ -55,20 +55,12 @@ namespace TP_Threads___Classe_File_Safe
 
         public bool Vide()
         {
-            if (tete == queue && tete == -1)
-            {
-                return true;
-            }
-            return false;
+            return (tete == queue && tete == -1);
         }
 
         public bool Pleine()
         {
-            if(tete == Suivant(queue))
-            {
-                return true;
-            }
-            return false;
+            return tete == Suivant(queue);
         }
 
         public int NbElements()
@@ -83,7 +75,16 @@ namespace TP_Threads___Classe_File_Safe
 
         public T Premier()
         {
-            return tab[tete];
+            if(Vide())
+            {
+                throw new ExceptionFileVide();
+            }
+               
+            else
+            {
+                System.Threading.Thread.Sleep(5000);
+                return tab[tete];
+            }
         }
 
         public class ExceptionFileVide : Exception { }
