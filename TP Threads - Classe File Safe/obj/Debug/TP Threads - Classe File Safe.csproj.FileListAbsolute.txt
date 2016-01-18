@@ -1,0 +1,6 @@
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\bin\Debug\TP Threads - Classe File Safe.exe.config
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\obj\Debug\TP Threads - Classe File Safe.csprojResolveAssemblyReference.cache
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\bin\Debug\TP Threads - Classe File Safe.exe
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\bin\Debug\TP Threads - Classe File Safe.pdb
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\obj\Debug\TP Threads - Classe File Safe.exe
+V:\C#\TP Threads - Classe File Safe\TP Threads - Classe File Safe\obj\Debug\TP Threads - Classe File Safe.pdb
