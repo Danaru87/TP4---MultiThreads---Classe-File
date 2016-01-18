@@ -16,10 +16,7 @@ namespace TP_Threads___Classe_File_Safe
         {
             f = new FileThreadUnsafe<int>(10);
 
-            for (int i = 1; i <= 5; i ++)
-            {
-                f.Enfiler(i);
-            }
+            f.Enfiler(1);
             Console.WriteLine("Nombre d'élements: "+ f.NbElements());
 
             th1 = new Thread(TH1Func);
@@ -44,7 +41,7 @@ namespace TP_Threads___Classe_File_Safe
             Console.WriteLine(f.NbElements());
             while(!f.Vide())
             {
-                f.Defiler();
+                Console.WriteLine(f.Premier());
             }
         }
     }

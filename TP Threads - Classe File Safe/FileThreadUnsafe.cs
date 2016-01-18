@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TP_Threads___Classe_File_Safe
 {
     class FileThreadUnsafe<T>
     {
+        readonly object blocmoi = new object();
         private T[] tab;
         private int tete, queue;
 
@@ -21,35 +23,44 @@ namespace TP_Threads___Classe_File_Safe
         {
             return (i + 1) % tab.Length;
         }
-
         private void Init()
         {
-            tete = queue = -1;
+            lock(blocmoi)
+            {
+                tete = queue = -1;
+            }
         }
 
         public void Enfiler(T element)
         {
-            if (Pleine())
-                throw new ExceptionFilePleine();
-            else if (Vide())
-                tab[queue = tete = 0] = element;
-            else
-                tab[queue = Suivant(queue)] = element;
+            lock(blocmoi)
+            {
+                if (Pleine())
+                    throw new ExceptionFilePleine();
+                else if (Vide())
+                    tab[queue = tete = 0] = element;
+                else
+                    tab[queue = Suivant(queue)] = element;
+            }
         }
 
         public void Defiler()
         {
-            if(Vide())
+            lock(blocmoi)
             {
-                throw new ExceptionFileVide();
-            }
-            else if(tete == queue)
-            {
-                tete = queue = -1;
-            }
-            else
-            {
-                tete = Suivant(tete);
+                if (Vide())
+                {
+                    throw new ExceptionFileVide();
+                }
+                else if (tete == queue)
+                {
+                    Thread.Sleep(1000);
+                    Init();
+                }
+                else
+                {
+                    tete = Suivant(tete);
+                }
             }
         }
 
@@ -65,25 +76,29 @@ namespace TP_Threads___Classe_File_Safe
 
         public int NbElements()
         {
-            if (Vide())
-                return 0;
-            else if (tete <= queue)
-                return queue - tete + 1;
-            else
-                return tab.Length + queue - tete + 1;
+            lock(blocmoi)
+            {
+                if (Vide())
+                    return 0;
+                else if (tete <= queue)
+                    return queue - tete + 1;
+                else
+                    return tab.Length + queue - tete + 1;
+            }
         }
 
         public T Premier()
         {
-            if(Vide())
+            lock(blocmoi)
             {
-                throw new ExceptionFileVide();
-            }
-               
-            else
-            {
-                System.Threading.Thread.Sleep(5000);
-                return tab[tete];
+                if (Vide())
+                {
+                    throw new ExceptionFileVide();
+                }
+                else
+                {
+                    return tab[tete];
+                }
             }
         }
 
