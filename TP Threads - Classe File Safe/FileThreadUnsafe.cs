@@ -21,7 +21,10 @@ namespace TP_Threads___Classe_File_Safe
 
         private int Suivant(int i)
         {
-            return (i + 1) % tab.Length;
+            lock(blocmoi)
+            {
+                return (i + 1) % tab.Length;
+            }
         }
         private void Init()
         {
