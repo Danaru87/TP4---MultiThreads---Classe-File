@@ -16,7 +16,11 @@ namespace TP_Threads___Classe_File_Safe
         {
             f = new FileThreadUnsafe<int>(10);
 
-            f.Enfiler(1);
+            for (int i = 0; i < 100; i++)
+            {
+                try { f.Enfiler(i); }
+                catch (Exception e) { Console.WriteLine("La file est pleine"); break; }
+            }
             Console.WriteLine("Nombre d'élements: "+ f.NbElements());
 
             th1 = new Thread(TH1Func);
@@ -30,9 +34,16 @@ namespace TP_Threads___Classe_File_Safe
         public static void TH1Func()
         {
             Console.WriteLine(f.NbElements());
-            if(!f.Vide())
+            while(!f.Vide())
             {
-                f.Defiler();
+                try
+                {
+                    f.Defiler();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Aucune action effectuée: " + e.Message);
+                }
             }
         }
 
@@ -41,7 +52,16 @@ namespace TP_Threads___Classe_File_Safe
             Console.WriteLine(f.NbElements());
             while(!f.Vide())
             {
-                Console.WriteLine(f.Premier());
+                try
+                {
+                    Console.WriteLine(f.Premier());
+                    f.Defiler();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
             }
         }
     }
